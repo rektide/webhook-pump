@@ -118,3 +118,5 @@ function WebhookPump(events, opts){
 
 	return webhookPumper
 }
+
+module.exports= WebhookPump
