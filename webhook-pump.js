@@ -1,4 +1,4 @@
-function WebhookPump(webhookPumpSource, opts){
+function WebhookPump(events, opts){
 	function *webhookPumper(next){
 		this.webhookPump= webhookPumper.webhookPump
 		if(this.isSpdy){
@@ -6,15 +6,16 @@ function WebhookPump(webhookPumpSource, opts){
 		}
 	}
 
-	if(webhookPumpSource && !opts){
-		if(webhookPumpSource.addListener){
-			webhookPumper.webhookPumpSource= webhookPumpSource
+	if(events && !opts){
+		if(events.events){
+			opts= events
 		}else{
-			opts= webhookPumpSource
-			webhookPumpSource= null
+			opts= {events: events}
 		}
+	}else if(events){
+		opts.events= events
 	}
-	webhookPumpSource.webhookPump= opts
+	webhookPumper.webhookPump= opts
 
 	return webhookPumper
 }
