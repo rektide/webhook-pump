@@ -13,16 +13,15 @@ var
   Receipt= require("../publisher/Receipt")
 
 function subscribe(ctx){
-	function subscribe*(next){
+	function *subscribe(next){
 		var
 		  _subscribe= new Subscribe(),
 		  _push= new Push(),
 		  _receipt= new Receipt()
-		this.app[ ctx.name]= {
-			subscribe: _subscribe,
-			push: _push,
-			receipt: _receipt
-		}
+		var reqCtx= this.app[ ctx.name]
+		reqCtx.subscribe= _subscribe
+		reqCtx.push= _push
+		reqCtx.receipt= _receipt
 		this.res.set( "Location": _subscribe.id)
 		yield next
 	}
