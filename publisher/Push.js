@@ -1,11 +1,10 @@
 var
-  hash= require("../util/hash"),
+  base= require("../base"),
   classiness= require("insure-classiness")
 
 function Push(opts, ctx){
 	var self= classiness(this, Push, opts)
-	self.id= self.id|| hash(self)
-	self.created= ctx.timestamp
+	base(self, ctx)
 	return self
 }
 
