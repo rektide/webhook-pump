@@ -1,0 +1,22 @@
+{
+	"name": "webpush-pump",
+	"version": "0.0.0",
+	"description": "Create an event listener and a Koa handler, piping events from the listener out as HTTP2 Push resources to HTTP2 clients who have touched the Koa handler endpoint.",
+	"main": "webhook-pump.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://archive.voodoowarez.com/webhook-pump"
+	},
+	"author": "rektide de la faye",
+	"license": "X",
+	"dependencies": {
+		"generator-compose": "^0.1.0",
+		"insure-classiness": "^1.0.1",
+		"koa": "^1.0.0",
+		"koa-router": "^5.1.2",
+		"node-uuid": "^1.4.3"
+	}
+}
