@@ -13,3 +13,9 @@
    request sent to the push resource.
   https://tools.ietf.org/html/draft-ietf-webpush-protocol-00#section-6
 */
+
+function s( ctx){
+	function *s( next){
+		yeild next
+	}
+}

@@ -7,16 +7,24 @@
   https://tools.ietf.org/html/draft-ietf-webpush-protocol-00#section-3
 */
 
-var pushExistential= require("../util/pushExistential")
+var
+  Subscribe= require("./Subscribe"),
+  Push= require("../publisher/Push"),
+  Receipt= require("../publisher/Receipt")
 
 function subscribe(ctx){
 	function subscribe*(next){
-		var stream= this.response
-		streamId= ctx.add(stream)
-
-		this.ctx= this.ctx|| {}
-		var reqCtx= this.ctx[ ctx.name]= this.ctx[ ctx.name]|| {}
-		reqCtx.id= streamId
+		var
+		  _subscribe= new Subscribe(),
+		  _push= new Push(),
+		  _receipt= new Receipt()
+		this.app[ ctx.name]= {
+			subscribe: _subscribe,
+			push: _push,
+			receipt: _receipt
+		}
+		this.res.set( "Location": _subscribe.id)
+		yield next
 	}
 }
 
