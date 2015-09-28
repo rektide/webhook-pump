@@ -1,11 +1,11 @@
 var Router= require("koa-router")
 
-function directory( ctx, indexView, itemView){
+function routes( ctx, indexView, itemView, router){
 	var indx= index( ctx, indexView),
 	  itm= item()( ctx, itemView)
-	var router= new Router()
+	router= router|| new Router()
 	router.post( "/subscribe", subscribe)
 	router.get( "/s/:"+ ctx.streamIdParam, s)
-	return router.routes()
+	return router
 }
 module.exports= directory

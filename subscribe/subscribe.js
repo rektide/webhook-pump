@@ -12,19 +12,37 @@ var
   Push= require("../publisher/Push"),
   Receipt= require("../publisher/Receipt")
 
-function subscribe(ctx){
+function subscribe(ctxName){
 	function *subscribe(next){
 		var
-		  _subscribe= new Subscribe(),
-		  _push= new Push(),
-		  _receipt= new Receipt()
-		var reqCtx= this.app[ ctx.name]
+		  reqCtx= this.app[ ctxName],
+		  ctx= reqCtx.ctx,
+		  opts= {
+			ctx: ctx,
+			subscribe: null,
+			push: null,
+			receipt: null
+		  },
+		  _subscribe= new Subscribe(opts),
+		opts.subscribe= _subscribe.symbol
+		_push= new Push(opts)
+		opts.push= _push.symbol
+		_receipt= new Receipt(opts)
+
+		ctx.accept( _subscribe, _push, _receipt)
 		reqCtx.subscribe= _subscribe
 		reqCtx.push= _push
 		reqCtx.receipt= _receipt
-		this.res.set( "Location": _subscribe.id)
+
+		this.res.set( "Location", _subscribe.id)
 		yield next
 	}
+	Object.defineProperty( subscribe, "ctxName", {
+		get: function(){ return ctxName },
+		set: function(val){ ctxName= val },
+		enumerable: true
+	})
+	return subscribe
 }
 
 module.exports= subscribe

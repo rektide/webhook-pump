@@ -14,8 +14,29 @@
   https://tools.ietf.org/html/draft-ietf-webpush-protocol-00#section-6
 */
 
-function s( ctx){
+function s( ctxName){
 	function *s( next){
-		yeild next
+		var
+		  reqCtx= this.app[ ctxName],
+		  ctx= reqCtx.ctx,
+		  subscribeId= this.params.subscriptionId,
+		  _subscribe= subscribeId? ctx.subscribe[ subscribeId]: null,
+		  _subscriber= _subscribe? new Subscriber( {subscribe: _subscribe.symbol, reqCtx): null
+		if( !_subscriber){
+			throw new Error("No Subscription Found")
+		}
+
+		ctx.accept( _subscriber)
+
+		yield next
 	}
+	Object.defineProperty( s, "ctxName", {
+		get: function(){ return ctxName },
+		set: function(val){ ctxName= val },
+		enumerable: true
+	})
+	return s
 }
+
+module.exports= s
+module.exports.s= s

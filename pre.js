@@ -1,19 +1,25 @@
 var
   time= require("util/time")
 
-function pre(ctx){
-	return function *pre( next){
+function pre(ctxName){
+	function *pre( next){
 		var app= this.app
 		if( !app){
 			app= this.app= {}
 		}
-		var reqCtx= app[ ctx.name]
+		var reqCtx= app[ ctxName]
 		if( !reqCtx){
-			reqCtx= app[ ctx.name]= {ctx: ctx}
+			reqCtx= app[ ctxName]= {ctx: ctx}
 		}
 		this.timestamp= reqCtx.timestamp= (new Date()).getTime()
 		yield next
 	}
+	Object.defineProperty(pre, "ctxName", {
+		get: function(){ return ctxName },
+		set: function(val){ ctxName= val },
+		enumerable: true
+	})
+	return pre
 }
 
 module.exports= pre
