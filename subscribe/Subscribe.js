@@ -3,8 +3,8 @@ var
   classiness= require( "insure-classiness"),
 
 function Subscribe( opts){
-	var self= classiness( this, Subscriber, opts)
-	base( self)
+	var self= classiness( this, Subscribe, opts)
+	base( self, opts)
 	self.tick= self.tick|| opts.tick|| 0
 	return self
 }

@@ -1,21 +1,15 @@
 var
-  base= require("../base"),
-  classiness= require("insure-classiness")
+  base= require( "../base"),
+  classiness= require( "insure-classiness")
 
-function Push(opts, ctx){
-	if(opts && ctx === undefined){
-		ctx= opts
-		opts= null
-	}
-	if(opts && !opts.subscribe){
-		opts= {
-			subscribe: opts
-		}
-	}
+function Push( opts){
 
-	var self= classiness(this, Push, opts)
-	base(self, ctx)
+	var self= classiness( this, Push, opts)
+	base( self, opts)
 	self.subscribe= self.subscribe|| opts.subscribe
+	if( !self.subscribe){
+		throw new Error("Depends on a subscribe")
+	}
 	return self
 }
 
