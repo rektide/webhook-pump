@@ -10,4 +10,4 @@ function Subscriber( opts){
 	return self
 }
 
-Subscribe.prototype[ "@type"]= Subscribe.name.toLowerCase()
+Subscriber.prototype[ "@type"]= Subscriber.name.toLowerCase()
