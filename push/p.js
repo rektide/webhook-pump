@@ -6,9 +6,30 @@
    the body of the request"
   https://tools.ietf.org/html/draft-ietf-webpush-protocol-00#section-5
 */
-
 function p( ctxName){
 	function *p( next){
+		var
+		  reqCtx= this.app[ ctxName],
+		  ctx= reqCtx.ctx,
+		  push= reqCtx.push|| ctx.push[ this.params.pushId],
+		  subscribe,
+		  subscribers
+		if( !push){
+			throw new Error("Param 'push' error")
+		}
+		subsribe= ctx.subscribe[ push.subscribe]
+		if( !push){
+			throw new Error("Param 'push' error")
+		}
+		subscribers= ctx.subscribeToSubscribers( subscribe.symbol)
+		if(! push){
+			throw new Error("param 'push' error")
+		}
+
+		// tempted to make a Pushes object to hold state
+
+		yield next
+
 	}
 	Object.defineProperty( s, "ctxName", {
 		get: function(){ return ctxName },

@@ -18,6 +18,7 @@
 		"insure-classiness": "^1.0.1",
 		"koa": "^1.0.0",
 		"koa-router": "^5.1.2",
-		"node-uuid": "^1.4.3"
+		"node-uuid": "^1.4.3",
+		"observed-time-projection": "^1.0.1"
 	}
 }

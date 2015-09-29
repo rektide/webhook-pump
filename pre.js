@@ -11,6 +11,7 @@ function pre(ctxName){
 		if( !reqCtx){
 			reqCtx= app[ ctxName]= {ctx: ctx}
 		}
+		this.params= this.params|| {}
 		this.timestamp= reqCtx.timestamp= (new Date()).getTime()
 		yield next
 	}

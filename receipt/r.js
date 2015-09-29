@@ -28,7 +28,7 @@ function *r( ctxName){
 		  },
 		  _receipter= noReceipt? null: new Receipter(opts)
 		if( noReceipt){
-			throw new Error("Receipt not found '"+ this.params.receiptId+ "'")
+			throw new Error("Param 'receipt' error")
 		}
 
 		ctx.accept( _receipter)

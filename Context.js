@@ -1,6 +1,6 @@
 var
-  _= require( "lodash"),
   insureClassiness= require( "insure-classiness"),
+  projection= require("observed-time-projection"),
   uuid= require( "node-uuid")
 
 function Context( opts){
@@ -9,6 +9,11 @@ function Context( opts){
 	self.push= {}
 	self.receipt= {}
 	self.subscriber= {}
+	self.subscribeToSubscriber= projection(self.subscriber, function( subscriber){
+		return subscriber.symbol
+	}, function( subscriber){
+		return subscriber.subscribe
+	})
 	return self
 }
 
