@@ -10,3 +10,7 @@ function Subscribe( opts){
 }
 
 Subscribe.prototype[ "@type"]= Subscribe.name.toLowerCase()
+Subscribe.prototype.tick= -1
+Subscribe.prototype.created= null
+Subscribe.prototype.id= null
+Subscribe.prototype.symbol= null

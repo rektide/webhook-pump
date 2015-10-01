@@ -15,15 +15,15 @@ function p( ctxName){
 		  subscribe,
 		  subscribers
 		if( !push){
-			throw new Error("Param 'push' error")
+			throw new Error( "Param 'push' error")
 		}
 		subsribe= ctx.subscribe[ push.subscribe]
 		if( !push){
-			throw new Error("Param 'push' error")
+			throw new Error( "Param 'push' error")
 		}
 		subscribers= ctx.subscribeToSubscribers( subscribe.symbol)
-		if(! push){
-			throw new Error("param 'push' error")
+		if( !push){
+			throw new Error( "param 'push' error")
 		}
 
 		// tempted to make a Pushes object to hold state

@@ -1,5 +1,5 @@
 var
-  time= require("util/time")
+  time= require("./util/time")
 
 function pre(ctxName){
 	function *pre( next){

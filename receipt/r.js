@@ -12,8 +12,8 @@ var
   Attached to Push Message Delivery `/p` requests as a `Push-Receipt` field
   https://tools.ietf.org/html/draft-ietf-webpush-protocol-00#section-6.2
 */
-function *r( ctxName){
-	function r( next){
+function r( ctxName){
+	function *r( next){
 		if( !this.params){
 			return yield next
 		}

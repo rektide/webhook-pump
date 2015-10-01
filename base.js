@@ -1,6 +1,6 @@
 // Inherit Classiness doesn't recurse the prototype chain, so manually apply this instead
 
-var hash= require( "./hash")
+var hash= require( "./util/hash")
 
 module.exports= function base(o, opts){
 	o.symbol= Symbol()

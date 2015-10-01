@@ -13,3 +13,7 @@ function Receipt( opts){
 }
 
 Receipt.prototype["@type"]= "push:receipt"
+Receipt.prototype.push= null
+Receipt.prototype.created= null
+Receipt.prototype.id= null
+Receipt.prototype.symbol= null

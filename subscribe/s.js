@@ -1,3 +1,5 @@
+var S= require("./S")
+
 /**
   6.  Receiving Push Messages
   "A user agent requests the delivery of new push messages by making a
@@ -13,17 +15,18 @@
    request sent to the push resource.
   https://tools.ietf.org/html/draft-ietf-webpush-protocol-00#section-6
 */
-
 function s( ctxName){
 	function *s( next){
 		var
 		  reqCtx= this.app[ ctxName],
 		  ctx= reqCtx.ctx,
-		  _subscribe= reqCtx.subscribe|| ctx.subscribe[ this.params.subscribeId]
-		  _subscriber= _subscribe? new Subscriber({ subscribe: _subscribe.symbol, reqCtx: ctx}): null
-		if( !_subscriber){
-			throw new Error("No Subscription Found")
+		  subscribe= reqCtx.subscribe|| ctx.subscribe[ this.params.subscribeId],
+		  _subscriber
+		if( !subscribe){
+			throw new Error("Param 'subscribe' error")
 		}
+		_subscriber= new S({ subscribe: _subscribe.symbol, ctx: ctx, send: function( ){
+		}})
 
 		ctx.accept( _subscriber)
 
