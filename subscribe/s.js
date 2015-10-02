@@ -25,8 +25,7 @@ function s( ctxName){
 		if( !subscribe){
 			throw new Error("Param 'subscribe' error")
 		}
-		_subscriber= new S({ subscribe: _subscribe.symbol, ctx: ctx, send: function( ){
-		}})
+		_subscriber= new S({ subscribe: _subscribe.symbol, ctx: ctx, reqCtx: reqCtx, socket: this.req.socket })
 
 		ctx.accept( _subscriber)
 

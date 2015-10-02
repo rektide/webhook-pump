@@ -9,12 +9,27 @@ function S( opts){
 	if( !self.subscribe){
 		throw new Error("Depends on a subscribe")
 	}
-	self.tick= self.tick|| opts.tick|| 0
+	var
+	  socket= opts.socket
+	  
+	if( !socket){
+		throw new Error("Param 's' error")
+	}
+	self.send= function(){
+		
+	}
+	var
+	  ctx= opts.ctx
+	socket.on("end", function( ctx){
+		delete ctx.s[ self.id]
+		delete ctx.s[ self.symbol]
+	})
 	return self
 }
 
 S.prototype[ "@type"]= S.name.toLowerCase()
 S.prototype.subscribe= null
+S.prototype.send= null
 S.prototype.created= null
 S.prototype.id= null
 S.prototype.symbol= null
