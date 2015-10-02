@@ -19,3 +19,7 @@ function receipt( ctxName){
 	})
 	return receipt
 }
+receipt.uriTemplate= "/receipt/:receiptId"
+
+module.exports= receipt
+module.exports.receipt= receipt

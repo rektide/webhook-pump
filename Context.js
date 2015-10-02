@@ -8,11 +8,11 @@ function Context( opts){
 	self.subscribe= {}
 	self.push= {}
 	self.receipt= {}
-	self.subscriber= {}
-	self.subscribeToSubscriber= projection(self.subscriber, function( subscriber){
-		return subscriber.symbol
-	}, function( subscriber){
-		return subscriber.subscribe
+	self.s= {}
+	self.subscribeToSes= projection(self.s, function( s){
+		return s.symbol // to all s for subscribe
+	}, function( s){
+		return s.subscribe // map from subscribe
 	})
 	return self
 }

@@ -8,4 +8,4 @@ function routes( ctx, indexView, itemView, router){
 	router.get( "/s/:"+ ctx.streamIdParam, s)
 	return router
 }
-module.exports= directory
+module.exports= routes

@@ -18,3 +18,6 @@ S.prototype.subscribe= null
 S.prototype.created= null
 S.prototype.id= null
 S.prototype.symbol= null
+
+module.exports= S
+module.exports.S= S

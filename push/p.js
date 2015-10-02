@@ -1,3 +1,7 @@
+var
+  D= require("../subscribe/D"),
+  R= require("../receipt/R")
+
 /**
   5. Requesting Push Message Delivery
   "An application server requests the delivery of a push message by
@@ -6,38 +10,78 @@
    the body of the request"
   https://tools.ietf.org/html/draft-ietf-webpush-protocol-00#section-5
 */
-function p( ctxName){
+function p( ctxName, dPath){
+	path= dPath|| "/d/"
 	function *p( next){
 		var
 		  reqCtx= this.app[ ctxName],
-		  ctx= reqCtx.ctx,
-		  push= reqCtx.push|| ctx.push[ this.params.pushId],
-		  subscribe,
-		  subscribers
+		  ctx= reqCtx.ctx
+
+		reqCtx.push= push= reqCtx.push|| ctx.push[ this.params.pushId]
 		if( !push){
 			throw new Error( "Param 'push' error")
 		}
-		subsribe= ctx.subscribe[ push.subscribe]
+		reqCtx.subscribe= reqCtx.subscribe|| ctx.subscribe[ push.subscribe]
 		if( !push){
 			throw new Error( "Param 'push' error")
 		}
-		subscribers= ctx.subscribeToSubscribers( subscribe.symbol)
+		reqCtx.subscribers= reqCtx.subscribers|| ctx.subscribeToSes( subscribe.symbol)
 		if( !push){
-			throw new Error( "param 'push' error")
+			throw new Error( "Param 'push' error")
 		}
 
-		// tempted to make a Pushes object to hold state
+		// extract r, validate, make d
+		if( !reqCtx.d){
+			if( reqCtx.r=== undefined){
+				var rId= this.params.rId
+				if( rId=== undefined){
+					rId= this.req.headers["push-receipt"]
+				}
+				if( rId!== undefined){
+					reqCtx.r= reqCtx.r[ rId]
+					if( reqCtx.r=== undefined){
+						throw new Error("Param 'r' error")
+					}
+				}
+			}
+			if( reqCtx.r!== undefined){
+				var
+				  receipt= reqCtx.r.receipt? reqCtx.receipt[ reqCtx.r.receipt]: null,
+				  subscribe= receipt? reqCtx.subscribe[ receipt.subscribe]: null
+				if( !subscribe|| subscribe!== reqCtx.subscribe.symbol){
+					throw new Error("Param 'r' error")
+				}
+			}
+			reqCtx.d= new D(reqCtx) // subscriber acks
+		}
+
+		var _done= new Array(subscribers.length)
+		for(var i= 0;i < subscribers.length; ++i){
+			var
+			  subscriber= subscribers[i]
+			done[i]= subscriber.send(this, reqCtx)
+		}
+
+		this.status= 201
+		if( reqCtx.d.id){
+			this.res.headers["Location"]= dPath+ reqCtx.d.id
+		}
 
 		yield next
-
 	}
-	Object.defineProperty( s, "ctxName", {
+	Object.defineProperty( p, "ctxName", {
 		get: function(){ return ctxName },
 		set: function(val){ ctxName= val },
 		enumerable: true
 	})
+	Object.defineProperty( p, "dPath", {
+		get: function(){ return dPath },
+		set: function(val){ dPath= val },
+		enumerable: true
+	})
 	return p
 }
+p.uriTemplate= "/p/:pushId"
 
 module.exports= p
 module.exports.p= p

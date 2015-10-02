@@ -14,3 +14,6 @@ R.prototype.receipt= null
 R.prototype.created= null
 R.prototype.id= null
 R.prototype.symbol= null
+
+module.exports= R
+module.exports.R= R

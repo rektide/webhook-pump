@@ -1,7 +1,7 @@
 var
   Subscribe= require("./Subscribe"),
-  Push= require("../publisher/Push"),
-  Receipt= require("../publisher/Receipt")
+  Push= require("../push/Push"),
+  Receipt= require("../receipt/Receipt")
 
 /**
   3.  Subscribing for Push Messages
@@ -22,7 +22,7 @@ function subscribe(ctxName){
 			push: null,
 			receipt: null
 		  },
-		  _subscribe= new Subscribe(opts),
+		  _subscribe= new Subscribe(opts)
 		opts.subscribe= _subscribe.symbol
 		_push= new Push(opts)
 		opts.push= _push.symbol
@@ -43,6 +43,7 @@ function subscribe(ctxName){
 	})
 	return subscribe
 }
+subscribe.uriTemplate= "/subscribe"
 
 module.exports= subscribe
 module.exports.subscribe= subscribe

@@ -39,6 +39,7 @@ function s( ctxName){
 	})
 	return s
 }
+s.uriTemplate= "/s/:subscribeId"
 
 module.exports= s
 module.exports.s= s

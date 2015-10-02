@@ -16,3 +16,6 @@ function subsribeReply(ctxName){
 	return subscribeRepy
 
 }
+
+module.exports= subscribeReply
+module.exports.subscribeReply= subscribeReply

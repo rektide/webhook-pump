@@ -2,7 +2,7 @@
 var
   linkP= ["</p/", null, ">; rel=\"urn:ietf:params:push\""]
 
-function subsribeReply( ctxName){
+function subscribeReply( ctxName){
 	function *subscribeReply( next){
 		var reqCtx= this.ctx[ ctxName]
 		linkP[1]= reqCtx.push.id
@@ -16,3 +16,6 @@ function subsribeReply( ctxName){
 	return subscribeRepy
 
 }
+
+module.exports= subscribeReply
+module.exports.subscribeReply= subscribeReply

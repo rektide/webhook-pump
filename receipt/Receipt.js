@@ -17,3 +17,6 @@ Receipt.prototype.push= null
 Receipt.prototype.created= null
 Receipt.prototype.id= null
 Receipt.prototype.symbol= null
+
+module.exports= Receipt
+module.exports.Receipt= Receipt
