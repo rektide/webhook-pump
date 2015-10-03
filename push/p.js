@@ -68,11 +68,10 @@ function p( ctxName){
 			yield next // BREAK
 		}
 
-		var _done= new Array(subscribers.length)
 		for( var i= 0;i < reqCtx.s.length; ++i){
 			va
 			  s= reqCtx.s[i]
-			done[i]= s.send( reqCtx)
+			s.send( reqCtx)
 		}
 
 		this.status= 201

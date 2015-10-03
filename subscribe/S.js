@@ -22,6 +22,11 @@ function S( reqCtx){
 			var push= self.push|| S.push
 			var stream= push.call(this, pushCtx.pushPath, pushCtx.pushHeaders)
 			stream.end( pushCtx.pushBody)
+			//return new Promise( function( resolve, reject){
+			//	stream.on("end", function(){
+			//		resolve()
+			//	})
+			//})
 		}
 	}
 	var ctx= reqCtx.ctx
