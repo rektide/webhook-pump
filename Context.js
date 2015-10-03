@@ -1,7 +1,8 @@
 var
   insureClassiness= require( "insure-classiness"),
   projection= require("observed-time-projection"),
-  uuid= require( "node-uuid")
+  uuid= require( "node-uuid"),
+  pushView= require("./push/pushView")
 
 function Context( opts){
 	var self= insureClassiness( this, Context, opts)
@@ -71,3 +72,5 @@ Context.prototype.accept= function(){
 		}
 	}
 }
+
+Context.prototype.pushView= pushView

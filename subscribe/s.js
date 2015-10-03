@@ -19,15 +19,21 @@ function s( ctxName){
 	function *s( next){
 		var
 		  reqCtx= this.app[ ctxName],
-		  ctx= reqCtx.ctx,
-		  subscribe= reqCtx.subscribe|| ctx.subscribe[ this.params.subscribeId],
-		  _subscriber
-		if( !subscribe){
+		  ctx= reqCtx.ctx
+		if( !reqCtx.subscribe){
+			reqCtx= reqCtx.subscribe[ this.params.subscribeId]
+		}
+		if( !req.subscribe){
 			throw new Error("Param 'subscribe' error")
 		}
-		_subscriber= new S({ subscribe: _subscribe.symbol, ctx: ctx, reqCtx: reqCtx, socket: this.req.socket })
+		if( !reqCtx.s){
+			if( !reqCtx.socket){
+				reqCtx.socket= this.res.socket
+			}
+			reqCtx.s= new S( reqCtx)
+		}
 
-		ctx.accept( _subscriber)
+		ctx.accept( reqCtx.s)
 
 		yield next
 	}

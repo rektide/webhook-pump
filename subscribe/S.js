@@ -2,25 +2,30 @@ var
   base= require( "../base"),
   classiness= require( "insure-classiness")
 
-function S( opts){
-	var self= classiness( this, S, opts)
-	base( self, opts)
-	self.subscribe= self.subscribe|| opts.subscribe
+function S( reqCtx){
+	var self= classiness( this, S, reqCtx)
+	base( self, reqCtx)
+	self.subscribe= self.subscribe|| reqCtx.subscribe // Context indexes by
 	if( !self.subscribe){
 		throw new Error("Depends on a subscribe")
 	}
-	var
-	  socket= opts.socket
-	  
-	if( !socket){
-		throw new Error("Param 's' error")
+	self.socket= self.socket|| reqCtx.socket
+	if( !self.socket){
+		throw new Error("Depends on a subscribe")
 	}
-	self.send= function(){
-		
+	self.send= self.send|| opts.send
+	if( !self.send){
+		self.send= function( pushCtx){
+			if( !pushCtx.pushPath|| !pushCtx.pushHeaders){
+				throw new Error( "Param 'pushView' error")
+			}
+			var push= self.push|| S.push
+			var stream= push.call(this, pushCtx.pushPath, pushCtx.pushHeaders)
+			stream.end( pushCtx.pushBody)
+		}
 	}
-	var
-	  ctx= opts.ctx
-	socket.on("end", function( ctx){
+	var ctx= reqCtx.ctx
+	socket.on("end", function(){
 		delete ctx.s[ self.id]
 		delete ctx.s[ self.symbol]
 	})
@@ -28,11 +33,14 @@ function S( opts){
 }
 
 S.prototype[ "@type"]= S.name.toLowerCase()
+
 S.prototype.subscribe= null
+S.prototype.socket= null
 S.prototype.send= null
 S.prototype.created= null
 S.prototype.id= null
 S.prototype.symbol= null
 
+S.push= require("node-spdy/lib/spdy/response").push
 module.exports= S
 module.exports.S= S
