@@ -13,6 +13,9 @@ function S( reqCtx){
 	if( !self.socket){
 		throw new Error("Depends on a subscribe")
 	}
+	if( !self.socket.symbol){
+		self.socket.symbol= Symbol()
+	}
 	self.send= self.send|| opts.send
 	if( !self.send){
 		self.send= function( pushCtx){

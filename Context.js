@@ -18,6 +18,13 @@ function Context( opts){
 	}, function( s){
 		return s.subscribe // map from subscribe
 	})
+
+	self.receiptToS= projection(self.receipt, function( s){
+		return s.symbol // to all s for subscribe
+	}, function( s){
+		return s.s // map from subscribe
+	})
+
 	return self
 }
 

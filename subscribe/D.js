@@ -2,27 +2,28 @@ var
   base= require( "../base"),
   classiness= require( "insure-classiness")
 
-function D( opts){
-	var self= classiness( this, D, opts)
-	base( self, opts)
-	self.r= self.d|| opts.r.symbol|| null
-	if( !self.r){
-		self.receipt= self.receipt|| opts.receipt|| null
-		if( !self.receipt){
-			self.subscribe= self.subscribe|| opts.subscribe.symbol
-		}
-	}
-	if( !self.r&& !self.receipt&& !self.subscribe){
-		throw new Error("Need an anchor for D")
-	}
+function D( reqCtx){
+	var self= classiness( this, D, reqCtx)
+	self= classiness( self, D, reqCtx)
+	base( self, reqCtx)
+	self.r= self.r|| reqCtx.r
+	
+	self.acked= {}
+	self.n= 0
+
+	
+
 	return self
+}
+
+D.prototype.ack= function( socket){
 }
 
 D.prototype.findSubscribe= function(ctx){
 	var
 	  receipt,
 	  subscribe
-	if( this.r){
+	if( !this.r){
 		receipt= ctx.receipt[ this.r.receipt]
 		if( !receipt){
 			throw new Error("Param 'd' error")

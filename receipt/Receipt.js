@@ -2,12 +2,16 @@ var
   base= require( "../base"),
   classiness= require( "insure-classiness")
 
-function Receipt( opts){
-	var self= classiness( this, Receipt, opts)
-	base( self, opts)
-	self.push= self.push|| opts.push
+function Receipt( reqCtx){
+	var self= classiness( this, Receipt, reqCtx)
+	base( self, reqCtx)
+	self.push= self.push|| reqCtx.push.symbol
 	if( !self.push){
-		throw new Error("Depends on a push")
+		// normally receipts only delivered for a specific push, but can alternatively bind wider, to a subscribe
+		self.subscribe= self.subscribe|| reqCtx.subscribe.symbol
+		if( !self.subscribe){
+			throw new Error("Depends on a push")
+		}
 	}
 	return self
 }

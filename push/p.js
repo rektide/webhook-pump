@@ -16,11 +16,11 @@ function p( ctxName){
 		  reqCtx= this.app[ ctxName],
 		  ctx= reqCtx.ctx
 
-		reqCtx.push= reqCtx.p|| ctx.push[ this.params.pId]
+		reqCtx.push= reqCtx.push|| ctx.push[ this.params.pushId]
 		if( !reqCtx.push){
 			throw new Error( "Param 'push' error")
 		}
-		reqCtx.subscribe= reqCtx.subscribe|| ctx.subscribe[ reqCtx.push]
+		reqCtx.subscribe= reqCtx.subscribe|| ctx.subscribe[ reqCtx.push.subscribe]
 		if( !reqCtx.subscribe){
 			if( p.noSubscribeOk){
 				return yield next
@@ -57,7 +57,7 @@ function p( ctxName){
 					throw new Error("Param 'r' error")
 				}
 			}
-			reqCtx.d= new D(reqCtx) // subscriber acks
+			reqCtx.d= new D(reqCtx)
 		}
 
 		if( !reqCtx.pushView){

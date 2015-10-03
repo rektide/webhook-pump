@@ -14,25 +14,20 @@ var
 */
 function r( ctxName){
 	function *r( next){
-		if( !this.params){
-			return yield next
-		}
 		var
 		  reqCtx= this.app[ ctxName],
-		  ctx= reqCtx.ctx,
-		  receipt= ctx.receipt[ this.params.receiptId],
-		  noReceipt= !receipt,
-		  opts= noReceipt? null: {
-			ctx: ctx,
-			receipt: receipt
-		  },
-		  _receipter= noReceipt? null: new Receipter(opts)
-		if( noReceipt){
-			throw new Error("Param 'receipt' error")
+		  ctx= reqCtx.ctx
+
+		reqCtx.r= reqCtx.r|| ctx.r[ this.params.rId]
+		if( !reqCtx.r){
+			throw new Error("Param 'r' error")
+		}
+		if( !reqCtx.socket){
+			reqCtx.socket= this.req.socket
 		}
 
-		ctx.accept( _receipter)
-		reqCtx.receipter= _receipter
+		self.r= new R(reqCtx)
+		ctx.accept( self.r)
 
 		yield next
 	}

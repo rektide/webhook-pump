@@ -2,10 +2,9 @@ var
   base= require( "../base"),
   classiness= require( "insure-classiness")
 
-function Subscribe( opts){
-	var self= classiness( this, Subscribe, opts)
-	base( self, opts)
-	self.tick= self.tick|| opts.tick|| 0
+function Subscribe( reqCtx){
+	var self= classiness( this, Subscribe, reqCtx)
+	base( self, reqCtx)
 	return self
 }
 
