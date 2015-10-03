@@ -9,6 +9,7 @@ function Context( opts){
 	self.push= {}
 	self.receipt= {}
 	self.s= {}
+	self.d= {}
 	self.subscribeToSes= projection(self.s, function( s){
 		return s.symbol // to all s for subscribe
 	}, function( s){
@@ -20,7 +21,18 @@ function Context( opts){
 Context.prototype.subscribe= null
 Context.prototype.push= null
 Context.prototype[ "push:receipt"]= null
-Context.prototype.subscriber= null
+Context.prototype.s= null
+Context.prototype.d= null
+
+function path( name){
+	return this.path[ name]|| path[ name]
+}
+Context.prototype.path= path
+var _paths= ["subscribe", "p", "d", "r", "d", "receipt"]
+for(var i in _paths){
+	path[ _paths[i]]= "/"+ _paths[i]+ "/"
+}
+_paths.receipt= "/receipts/"
 
 Context.prototype.name= "webpushPump" // app name
 

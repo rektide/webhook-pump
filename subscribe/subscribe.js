@@ -16,24 +16,22 @@ function subscribe(ctxName){
 		var
 		  reqCtx= this.app[ ctxName],
 		  ctx= reqCtx.ctx,
-		  opts= {
-			ctx: ctx,
-			subscribe: null,
-			push: null,
-			receipt: null
-		  },
-		  _subscribe= new Subscribe(opts)
-		opts.subscribe= _subscribe.symbol
-		_push= new Push(opts)
-		opts.push= _push.symbol
-		_receipt= new Receipt(opts)
+		  _created
 
-		ctx.accept( _subscribe, _push, _receipt)
-		reqCtx.subscribe= _subscribe
-		reqCtx.push= _push
-		reqCtx.receipt= _receipt
+		if( !reqCtx.subscribe){
+			reqCtx.subscribe= _created= new Subscribe(reqCtx)
+			ctx.accept( _created)
+		}
+		if( !reqReqCtx.push){
+			reqCtx.push= _created= new Push(reqCtx)
+			ctx.accept( _created)
+		}
+		if( !reqCtx.receipt){
+			reqCtx.receipt= _created= new Receipt(reqCtx)
+			ctx.accept( _created)
+		}
 
-		this.res.set( "Location", _subscribe.id)
+		this.res.set( "Location", ctx.path("s")+ reqCtx.subscribe.id)
 		yield next
 	}
 	Object.defineProperty( subscribe, "ctxName", {
@@ -43,7 +41,6 @@ function subscribe(ctxName){
 	})
 	return subscribe
 }
-subscribe.uriTemplate= "/subscribe"
 
 module.exports= subscribe
 module.exports.subscribe= subscribe

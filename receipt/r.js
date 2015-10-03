@@ -43,7 +43,6 @@ function r( ctxName){
 	})
 	return r
 }
-r.uriTemplate= "/r/:receiptId"
 
 module.exports= r
 module.exports.r= r

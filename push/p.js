@@ -10,8 +10,7 @@ var
    the body of the request"
   https://tools.ietf.org/html/draft-ietf-webpush-protocol-00#section-5
 */
-function p( ctxName, dPath){
-	path= dPath|| "/d/"
+function p( ctxName){
 	function *p( next){
 		var
 		  reqCtx= this.app[ ctxName],
@@ -64,7 +63,7 @@ function p( ctxName, dPath){
 
 		this.status= 201
 		if( reqCtx.d.id){
-			this.res.headers["Location"]= dPath+ reqCtx.d.id
+			this.res.headers["Location"]= ctx.path("d")+ reqCtx.d.id
 		}
 
 		yield next
@@ -74,14 +73,7 @@ function p( ctxName, dPath){
 		set: function(val){ ctxName= val },
 		enumerable: true
 	})
-	Object.defineProperty( p, "dPath", {
-		get: function(){ return dPath },
-		set: function(val){ dPath= val },
-		enumerable: true
-	})
-	return p
 }
-p.uriTemplate= "/p/:pushId"
 
 module.exports= p
 module.exports.p= p
