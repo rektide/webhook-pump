@@ -16,16 +16,22 @@ function p( ctxName){
 		  reqCtx= this.app[ ctxName],
 		  ctx= reqCtx.ctx
 
-		reqCtx.push= push= reqCtx.push|| ctx.push[ this.params.pushId]
-		if( !push){
+		reqCtx.push= reqCtx.p|| ctx.push[ this.params.pId]
+		if( !reqCtx.push){
 			throw new Error( "Param 'push' error")
 		}
-		reqCtx.subscribe= reqCtx.subscribe|| ctx.subscribe[ push.subscribe]
-		if( !push){
+		reqCtx.subscribe= reqCtx.subscribe|| ctx.subscribe[ reqCtx.push]
+		if( !reqCtx.subscribe){
+			if( p.noSubscribeOk){
+				return yield next
+			}
 			throw new Error( "Param 'push' error")
 		}
-		reqCtx.subscribers= reqCtx.subscribers|| ctx.subscribeToSes( subscribe.symbol)
-		if( !push){
+		reqCtx.ses = reqCtx.subscribers|| ctx.subscribeToS( subscribe.symbol)
+		if( !reqCtx.ses){
+			if( p.noSOk){
+				return yield next
+			}
 			throw new Error( "Param 'push' error")
 		}
 
@@ -54,11 +60,19 @@ function p( ctxName){
 			reqCtx.d= new D(reqCtx) // subscriber acks
 		}
 
+		if( !reqCtx.pushView){
+			if( !reqCtx.req){
+				reqCtx.req= this.req
+			}
+			reqCtx.pushView= new (reqCtx.PushView|| reqCtx.ctx.PushView)( reqCtx)
+			yield next // BREAK
+		}
+
 		var _done= new Array(subscribers.length)
-		for(var i= 0;i < subscribers.length; ++i){
-			var
-			  subscriber= subscribers[i]
-			done[i]= subscriber.send(this, reqCtx)
+		for(var i= 0;i < reqCtx.ses.length; ++i){
+			va
+			  s= reqCtx.ses[i]
+			done[i]= s.send( pushView)
 		}
 
 		this.status= 201

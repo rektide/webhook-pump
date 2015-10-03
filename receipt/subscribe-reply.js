@@ -3,7 +3,7 @@ var Receipt= require("./Receipt")
 var
   linkR= ["<", null, null, ">; rel=\"urn:ietf:params:", Receipt["@type"], "\""]
 
-function subscribeReply(ctxName){
+function subscribeReply( ctxName){
 	function *subscribeReply( next){
 		var reqCtx= this.ctx[ ctxName]
 		linkR[1]= reqCtx.ctx.path("receipt")

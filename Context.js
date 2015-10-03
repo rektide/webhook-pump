@@ -7,10 +7,12 @@ function Context( opts){
 	var self= insureClassiness( this, Context, opts)
 	self.subscribe= {}
 	self.push= {}
-	self.receipt= {}
+	self[ "push:receipt"]= {}
 	self.s= {}
 	self.d= {}
-	self.subscribeToSes= projection(self.s, function( s){
+
+	// views
+	self.subscribeToS= projection(self.s, function( s){
 		return s.symbol // to all s for subscribe
 	}, function( s){
 		return s.subscribe // map from subscribe
@@ -23,6 +25,7 @@ Context.prototype.push= null
 Context.prototype[ "push:receipt"]= null
 Context.prototype.s= null
 Context.prototype.d= null
+Context.prototype.subscribeToS= null
 
 function path( name){
 	return this.path[ name]|| path[ name]
