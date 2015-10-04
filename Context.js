@@ -34,6 +34,7 @@ Context.prototype[ "push:receipt"]= null
 Context.prototype.s= null
 Context.prototype.d= null
 Context.prototype.subscribeToS= null
+Context.prototype.hash= null
 
 function path( name){
 	return this.path[ name]|| path[ name]
