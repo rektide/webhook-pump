@@ -86,6 +86,9 @@ function p( ctxName){
 		set: function(val){ ctxName= val },
 		enumerable: true
 	})
+	p.method= "post"
+	p.param= "pId"
+	return p
 }
 
 module.exports= p

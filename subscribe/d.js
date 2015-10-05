@@ -21,6 +21,8 @@ function d( ctxName){
 		set: function(val){ ctxName= val },
 		enumerable: true
 	})
+	d.method= "delete"
+	d.param= "dId"
 	return d
 }
 

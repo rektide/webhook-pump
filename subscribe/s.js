@@ -42,6 +42,8 @@ function s( ctxName){
 		set: function(val){ ctxName= val },
 		enumerable: true
 	})
+	s.method= "get"
+	s.param= "subscribeId"
 	return s
 }
 

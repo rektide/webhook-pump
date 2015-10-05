@@ -36,6 +36,8 @@ function r( ctxName){
 		set: function(val){ ctxName= val },
 		enumerable: true
 	})
+	r.method= "get"
+	r.params= "rId"
 	return r
 }
 

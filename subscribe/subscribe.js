@@ -40,6 +40,7 @@ function subscribe(ctxName){
 		set: function(val){ ctxName= val },
 		enumerable: true
 	})
+	subscribe.method= "post"
 	return subscribe
 }
 

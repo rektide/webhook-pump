@@ -1,20 +1,22 @@
-var Push= require("./Push")
+var Receipt= require("./Receipt")
 
 var
-  linkP= ["<", null, null, ">; rel=\"urn:ietf:params:", Push["@type"] ,"\""]
+  linkR= ["<", null, null, ">; rel=\"urn:ietf:params:", Receipt["@type"], "\""]
 
 function subscribeReply( ctxName){
 	function *subscribeReply( next){
 		var reqCtx= this.ctx[ ctxName]
-		linkP[1]= reqCtx.ctx.path("p")
-		linkP[2]= reqCtx.push.id
-		this.res.set( "Link", linkP.join(""))
+		linkR[1]= reqCtx.ctx.path("receipt")
+		linkR[2]= reqCtx.receipt.id
+		this.res.set( "Link", linkR.join(""))
 	}
 	Object.defineProperty(s, "ctxName", {
 		get: function(){ return ctxName },
 		set: function(val){ ctxName= val },
 		enumerable: true
 	})
+	subscribeReply.method= "post"
+	subscribeReply.path= "subscribe"
 	return subscribeRepy
 }
 

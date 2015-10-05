@@ -34,17 +34,22 @@ Context.prototype[ "push:receipt"]= null
 Context.prototype.s= null
 Context.prototype.d= null
 Context.prototype.subscribeToS= null
+Context.prototype.ctxName= "webpush"
 Context.prototype.hash= null
 
 function path( name){
 	return this.path[ name]|| path[ name]
 }
-Context.prototype.path= path
 var _paths= ["subscribe", "p", "d", "r", "d", "receipt"]
 for(var i in _paths){
-	path[ _paths[i]]= "/"+ _paths[i]+ "/"
+	var
+	  _type= _paths[i],
+	  _path= "/"+ _paths[i]+ "/"
+	path[ _type]= _path
 }
-_paths.receipt= "/receipts/"
+path.subscribe= "/subscribe"
+path.receipt= "/receipts/"
+Context.prototype.path= path
 
 Context.prototype.name= "webpushPump" // app name
 
@@ -79,6 +84,18 @@ Context.prototype.accept= function(){
 			slot[ o.id]= o
 		}
 	}
+}
+
+Context.prototype.router= function(router){
+	router= router|| new Router()
+	require( "./subscribe")( this, router)
+	require( "./push")( this, router)
+	require( "./receipt")( this, router)
+	return router
+}
+
+Context.prototype.routes= function(router){
+	return this.router(router).routes()
 }
 
 Context.prototype.pushView= pushView

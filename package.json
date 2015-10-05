@@ -16,9 +16,16 @@
 	"dependencies": {
 		"generator-compose": "^0.1.0",
 		"insure-classiness": "^1.0.1",
-		"koa": "^1.0.0",
-		"koa-router": "^5.1.2",
 		"node-uuid": "^1.4.3",
 		"observed-time-projection": "^1.0.1"
+	},
+	"peerDependencies": {
+		"koa": "^1.0.0",
+		"koa-router": "^5.2.3",
+		"node-spdy": "^2.0.5"
+	},
+	"devDependencies": {
+		"koa-router": "^5.2.3",
+		"tape": "^4.2.1"
 	}
 }
