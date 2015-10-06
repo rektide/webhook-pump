@@ -26,6 +26,7 @@
 	},
 	"devDependencies": {
 		"koa-router": "^5.2.3",
+		"selfsigned": "^1.2.0",
 		"tape": "^4.2.1"
 	}
 }

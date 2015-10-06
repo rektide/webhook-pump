@@ -99,3 +99,5 @@ Context.prototype.routes= function(router){
 }
 
 Context.prototype.pushView= pushView
+
+module.exports= Context
