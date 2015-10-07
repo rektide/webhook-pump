@@ -5,16 +5,20 @@ function routeMaker(){
 		if( !router|| !router.get|| !router.put|| !router.post|| !router.delete){
 			router= new ( require( "koa-router"))()
 		}
+		var pre= require( "../pre")
 		for( var i= 0; i< args.length; ++i){
 			var
-			  file= "../"+ arguments[ i],
-			  module= require( file),
+			  module= args[i],
 			  handler= module( ctx.ctxName),
-			  path= ctx.path( handler.name)
+			  path= ctx.path( handler.path|| handler.name),
+			  method= handler.method|| "get"
+			if( !path){
+				throw new Error("No path found for '"+ handler.name+ "'")
+			}
 			if( handler.params){
 				path= path+ ":"+ handler.params
 			}
-			router[ handler.method|| "GET"]( path, handler)
+			router[ method]( path, pre, handler)
 		}
 	}
 	return routes

@@ -10,14 +10,14 @@ function subscribeReply( ctxName){
 		linkR[2]= reqCtx.receipt.id
 		this.res.set( "Link", linkR.join(""))
 	}
-	Object.defineProperty(s, "ctxName", {
+	Object.defineProperty(subscribeReply, "ctxName", {
 		get: function(){ return ctxName },
 		set: function(val){ ctxName= val },
 		enumerable: true
 	})
 	subscribeReply.method= "post"
 	subscribeReply.path= "subscribe"
-	return subscribeRepy
+	return subscribeReply
 }
 
 module.exports= subscribeReply

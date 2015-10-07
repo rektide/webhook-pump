@@ -2,10 +2,10 @@ var pre= require("./pre")
 
 function koa(o){
 	o= o|| {}
-	o.ctx= o.ctx|| new require( "./Context")
+	o.ctx= o.ctx|| new (require( "./Context"))(o)
 	o.koa= o.koa|| require( "koa")()
 	o.koa.use( require( "./pre")( o.ctx), o.ctx.routes())
-	return o
+	return o.koa
 }
 
 function sign(o){

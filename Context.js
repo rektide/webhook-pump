@@ -13,13 +13,13 @@ function Context( opts){
 	self.d= {}
 
 	// views
-	self.subscribeToS= projection(self.s, function( s){
+	self.subscribeToS= projection( self.s, function( s){
 		return s.symbol // to all s for subscribe
 	}, function( s){
 		return s.subscribe // map from subscribe
 	})
 
-	self.receiptToS= projection(self.receipt, function( s){
+	self.receiptToS= projection( self[ "push:receipt"], function( s){
 		return s.symbol // to all s for subscribe
 	}, function( s){
 		return s.s // map from subscribe
@@ -40,7 +40,7 @@ Context.prototype.hash= null
 function path( name){
 	return this.path[ name]|| path[ name]
 }
-var _paths= ["subscribe", "p", "d", "r", "d", "receipt"]
+var _paths= ["subscribe", "s", "p", "d", "r", "d", "receipt"]
 for(var i in _paths){
 	var
 	  _type= _paths[i],
@@ -87,7 +87,7 @@ Context.prototype.accept= function(){
 }
 
 Context.prototype.router= function(router){
-	router= router|| new Router()
+	router= router|| new (require("koa-router"))()
 	require( "./subscribe")( this, router)
 	require( "./push")( this, router)
 	require( "./receipt")( this, router)
