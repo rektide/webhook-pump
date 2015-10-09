@@ -14,9 +14,9 @@ function Context( opts){
 
 	// views
 	self.subscribeToS= projection( self.s, function( s){
-		return s.symbol // to all s for subscribe
+		return s&& s.symbol // to all s for subscribe
 	}, function( s){
-		return s.subscribe // map from subscribe
+		return s&& s.subscribe // map from subscribe
 	})
 
 	self.receiptToS= projection( self[ "push:receipt"], function( s){
@@ -65,11 +65,11 @@ Context.prototype.accept= function(){
 		if( !o.id&& !o.symbol){
 			throw new Error( "Expected identifier for argument "+ i)
 		}
-		var slot= slots[i]= this[ type]
-		if( slot[o.id]!== undefined){
+		var slot= slots[ i]= this[ type]
+		if( slot[ o.id]!== undefined){
 			throw new Error( "Duplicate identifier (id)")
 		}
-		if( slot[o.symbol]!== undefined){
+		if( slot[ o.symbol]!== undefined){
 			throw new Error( "Duplicate identifier (symbol)")
 		}
 	}

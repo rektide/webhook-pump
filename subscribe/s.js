@@ -21,9 +21,9 @@ function s( ctxName){
 		  reqCtx= this.app[ ctxName],
 		  ctx= reqCtx.ctx
 		if( !reqCtx.subscribe){
-			reqCtx= reqCtx.subscribe[ this.params.subscribeId]
+			reqCtx.subscribe= reqCtx.ctx.subscribe[ this.params.subscribeId]
 		}
-		if( !req.subscribe){
+		if( !reqCtx.subscribe){
 			throw new Error("Param 'subscribe' error")
 		}
 		if( !reqCtx.s){
@@ -35,6 +35,8 @@ function s( ctxName){
 
 		ctx.accept( reqCtx.s)
 
+		// "The push service permits the request to remain outstanding."
+		this.respond= false
 		yield next
 	}
 	Object.defineProperty( s, "ctxName", {

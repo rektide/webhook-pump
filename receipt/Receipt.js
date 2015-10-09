@@ -3,7 +3,7 @@ var
   classiness= require( "insure-classiness")
 
 function Receipt( reqCtx){
-	var self= classiness( this, Receipt, reqCtx)
+	var self= classiness( this, Receipt, [ reqCtx])
 	base( self, reqCtx)
 	self.push= self.push|| reqCtx.push.symbol
 	if( !self.push){

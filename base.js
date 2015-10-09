@@ -4,7 +4,7 @@ var hash= require( "./util/hash")
 
 module.exports= function base(o, reqCtx){
 	o.symbol= Symbol()
-	o.created= reqCtx.ctx.timestamp|| (new Date()).getTime()
+	o.created= reqCtx&&( reqCtx.timestamp|| reqCtx.ctx&& reqCtx.ctx.timestamp)||( new Date()).getTime()
 	if( !o.id){
 		var
 		  _reqHash= reqCtx&& reqCtx.hash

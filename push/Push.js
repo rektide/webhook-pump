@@ -3,7 +3,7 @@ var
   classiness= require( "insure-classiness")
 
 function Push( opts){
-	var self= classiness( this, push, opts)
+	var self= classiness( this, Push, [ opts])
 	base( self, opts)
 	self.subscribe= self.subscribe|| opts.subscribe
 	if( !self.subscribe){

@@ -3,7 +3,7 @@ var
   classiness= require( "insure-classiness")
 
 function Subscribe( reqCtx){
-	var self= classiness( this, Subscribe, reqCtx)
+	var self= classiness( this, Subscribe, [ reqCtx])
 	base( self, reqCtx)
 	return self
 }

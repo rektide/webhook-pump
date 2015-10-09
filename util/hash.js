@@ -1,5 +1,7 @@
 var uuid= require("node-uuid")
 
-module.exports= function hash(){
+function hash(){
 	return uuid.v4()
 }
+
+module.exports= hash

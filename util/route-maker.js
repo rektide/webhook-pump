@@ -15,10 +15,10 @@ function routeMaker(){
 			if( !path){
 				throw new Error("No path found for '"+ handler.name+ "'")
 			}
-			if( handler.params){
-				path= path+ ":"+ handler.params
+			if( handler.param){
+				path= path+ ":"+ handler.param
 			}
-			router[ method]( path, pre, handler)
+			router[ method]( path, pre(ctx), handler)
 		}
 	}
 	return routes

@@ -1,3 +1,5 @@
-module.exports= function(){
+function time(){
 	return (new Date()).getTime()
 }
+
+module.exports= time
