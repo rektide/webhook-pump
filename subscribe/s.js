@@ -28,7 +28,7 @@ function s( ctxName){
 		}
 		if( !reqCtx.s){
 			if( !reqCtx.socket){
-				reqCtx.socket= this.res.socket
+				reqCtx.socket= this.response.socket
 			}
 			reqCtx.s= new S( reqCtx)
 		}

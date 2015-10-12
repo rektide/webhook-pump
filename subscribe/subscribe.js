@@ -32,7 +32,7 @@ function subscribe(ctxName){
 		}
 
 		var hostname= reqCtx.hostname|| ctx.hostname
-		this.res.set( "Location", hostname+ ctx.path("s")+ reqCtx.subscribe.id)
+		this.set( "Location", hostname+ ctx.path("s")+ reqCtx.subscribe.id)
 		yield next
 	}
 	Object.defineProperty( subscribe, "ctxName", {

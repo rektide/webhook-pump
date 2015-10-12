@@ -8,7 +8,7 @@ function subscribeReply( ctxName){
 		var reqCtx= this.ctx[ ctxName]
 		linkR[1]= reqCtx.ctx.path("receipt")
 		linkR[2]= reqCtx.receipt.id
-		this.res.set( "Link", linkR.join(""))
+		this.set( "Link", linkR.join(""))
 	}
 	Object.defineProperty(subscribeReply, "ctxName", {
 		get: function(){ return ctxName },

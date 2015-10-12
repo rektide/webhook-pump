@@ -23,7 +23,7 @@ function r( ctxName){
 			throw new Error("Param 'r' error")
 		}
 		if( !reqCtx.socket){
-			reqCtx.socket= this.req.socket
+			reqCtx.socket= this.socket
 		}
 
 		self.r= new R(reqCtx)

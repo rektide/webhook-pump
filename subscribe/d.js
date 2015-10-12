@@ -14,7 +14,7 @@ function d( ctxName){
 			throw new Error("Param 'd' error")
 		}
 
-		d.ack(this.res.socket)
+		d.ack(this.socket)
 	}
 	Object.defineProperty( d, "ctxName", {
 		get: function(){ return ctxName },

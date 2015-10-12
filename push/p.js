@@ -40,7 +40,7 @@ function p( ctxName){
 			if( reqCtx.r=== undefined){
 				var rId= this.params.rId
 				if( rId=== undefined){
-					rId= this.req.headers["push-receipt"]
+					rId= this.request.header["push-receipt"]
 				}
 				if( rId!== undefined){
 					reqCtx.r= reqCtx.r[ rId]
@@ -61,8 +61,8 @@ function p( ctxName){
 		}
 
 		if( !reqCtx.pushView){
-			if( !reqCtx.req){
-				reqCtx.req= this.req
+			if( !reqCtx.request){
+				reqCtx.request= this.request
 			}
 			(reqCtx.pushView|| reqCtx.ctx.pushView)( reqCtx)
 			yield next // BREAK
@@ -76,7 +76,7 @@ function p( ctxName){
 
 		this.status= 201
 		if( reqCtx.d.id){
-			this.res.headers["Location"]= ctx.path("d")+ reqCtx.d.id
+			this.set( "Location", ctx.path("d")+ reqCtx.d.id)
 		}
 
 		yield next

@@ -10,9 +10,6 @@ function D( reqCtx){
 	
 	self.acked= {}
 	self.n= 0
-
-	
-
 	return self
 }
 util.inherits( D, base)

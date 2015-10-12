@@ -31,7 +31,7 @@ function receipt( ctxName){
 		reqCtx.r= new R( reqCtx)
 
 		var hostname= reqCtx.hostname|| ctx.hostname
-		this.res.set( "Location", hostname+ ctx.path("r")+ reqCtx.r.id)
+		this.set( "Location", hostname+ ctx.path("r")+ reqCtx.r.id)
 		yield next
 	}
 	Object.defineProperty( receipt, "ctxName", {
