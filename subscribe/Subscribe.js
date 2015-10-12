@@ -1,12 +1,14 @@
 var
   base= require( "../base"),
-  classiness= require( "insure-classiness")
+  classiness= require( "insure-classiness"),
+  util= require( "util")
 
 function Subscribe( reqCtx){
 	var self= classiness( this, Subscribe, [ reqCtx])
-	base( self, reqCtx)
 	return self
 }
+util.inherits( Subscribe, base)
+
 
 Subscribe.prototype[ "@type"]= Subscribe.name.toLowerCase()
 Subscribe.prototype.tick= -1

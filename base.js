@@ -1,25 +1,34 @@
 // Inherit Classiness doesn't recurse the prototype chain, so manually apply this instead
 
-var hash= require( "./util/hash")
+var
+  classiness= require( "insure-classiness"),
+  hash= require( "./util/hash")
 
-module.exports= function base(o, reqCtx){
-	o.symbol= Symbol()
-	o.created= reqCtx&&( reqCtx.timestamp|| reqCtx.ctx&& reqCtx.ctx.timestamp)||( new Date()).getTime()
-	if( !o.id){
-		var
-		  _reqHash= reqCtx&& reqCtx.hash
-		if( _reqHash){
-			_reqHash= _reqHash[ o[ "@type"]]|| _reqHash
-			o.id= _reqHash(o, reqCtx)
+function base( opts){
+	var self= classiness( this, base, [ opts] )
+	self.symbol= self.symbol|| opts&& opts.symbol|| Symbol()
+	self.created= self.created|| opts&&( opts.created|| opts.timestamp|| opts.ctx&& opts.ctx.timestamp)||( new Date()).getTime()
+	var _type= self[ "@type"]|| opts[ "@type"]
+	self.id= self.id|| opts&& opts.id
+	if( !self.id&& self.hash){
+		if( _type&& self.hash[ _type]){
+			self.id= self.hash[ _type]( self, opts)
 		}
-		var
-		  _ctxHash= reqCtx&& reqCtx.ctx&& reqCtx.ctx.hash
-		if( !o.id&& _ctxHash){
-			o.id= _ctxHash(o, reqCtx)
-		}
-		if( !o.id){
-			o.id= hash(o, reqCtx)
+		if( !self.id){
+			self.id= opts.hash( self, opts)
 		}
 	}
-	return o
+	if( !self.id&& opts&& opts.hash){
+		if( _type&& opts.hash[ _type]){
+			self.id= opts.hash[ _type]( self, opts)
+		}
+		if( !self.id){
+			self.id= opts.hash( self, opts)
+		}
+	}
+	if( !self.id){
+		self.id= hash( self, opts)
+	}
+	return self
 }
+module.exports= base

@@ -1,10 +1,10 @@
 var
   base= require( "../base"),
-  classiness= require( "insure-classiness")
+  classiness= require( "insure-classiness"),
+  util= require( "util")
 
 function R( reqCtx){
 	var self= classiness( this, R, [ reqCtx])
-	base( self, reqCtx)
 
 	self.receipt= self.receipt|| reqCtx.receipt
 	self.socket= self.socket|| reqCtx.socket
@@ -13,6 +13,7 @@ function R( reqCtx){
 	}
 	return self
 }
+util.inherits( R, base)
 
 R.prototype[ "@type"]= R.name.toLowerCase()
 R.prototype.receipt= null

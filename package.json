@@ -15,7 +15,7 @@
 	"license": "X",
 	"dependencies": {
 		"generator-compose": "^0.1.0",
-		"insure-classiness": "^1.0.1",
+		"insure-classiness": "^1.1.0",
 		"node-uuid": "^1.4.3",
 		"observed-time-projection": "^1.0.1"
 	},

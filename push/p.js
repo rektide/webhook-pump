@@ -16,7 +16,7 @@ function p( ctxName){
 		  reqCtx= this.app[ ctxName],
 		  ctx= reqCtx.ctx
 
-		reqCtx.push= reqCtx.push|| ctx.push[ this.params.pushId]
+		reqCtx.push= reqCtx.push|| ctx.push[ this.params.pId]
 		if( !reqCtx.push){
 			throw new Error( "Param 'push' error")
 		}

@@ -1,10 +1,10 @@
 var
   base= require( "../base"),
-  classiness= require( "insure-classiness")
+  classiness= require( "insure-classiness"),
+  util= require("util")
 
 function Receipt( reqCtx){
 	var self= classiness( this, Receipt, [ reqCtx])
-	base( self, reqCtx)
 	self.push= self.push|| reqCtx.push.symbol
 	if( !self.push){
 		// normally receipts only delivered for a specific push, but can alternatively bind wider, to a subscribe
@@ -15,6 +15,7 @@ function Receipt( reqCtx){
 	}
 	return self
 }
+util.inherits( Receipt, base)
 
 Receipt.prototype["@type"]= "push:receipt"
 Receipt.prototype.push= null

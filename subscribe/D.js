@@ -1,11 +1,11 @@
 var
   base= require( "../base"),
-  classiness= require( "insure-classiness")
+  classiness= require( "insure-classiness"),
+  util= require("util")
 
 function D( reqCtx){
 	var self= classiness( this, D, [ reqCtx])
 	self= classiness( self, D, reqCtx)
-	base( self, reqCtx)
 	self.r= self.r|| reqCtx.r
 	
 	self.acked= {}
@@ -15,6 +15,7 @@ function D( reqCtx){
 
 	return self
 }
+util.inherits( D, base)
 
 D.prototype.ack= function( socket){
 }

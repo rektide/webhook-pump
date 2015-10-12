@@ -1,10 +1,10 @@
 var
   base= require( "../base"),
-  classiness= require( "insure-classiness")
+  classiness= require( "insure-classiness"),
+  util= require( "util")
 
 function S( reqCtx){
 	var self= classiness( this, S, [ reqCtx])
-	base( self, reqCtx)
 	self.subscribe= self.subscribe|| reqCtx&& reqCtx.subscribe // Context indexes by
 	if( !self.subscribe){
 		throw new Error("Depends on a subscribe")
@@ -36,6 +36,7 @@ function S( reqCtx){
 	})
 	return self
 }
+util.inherits( S, base)
 
 S.prototype[ "@type"]= S.name.toLowerCase()
 
