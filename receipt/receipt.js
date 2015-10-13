@@ -11,7 +11,7 @@ var R= require("./R")
 function receipt( ctxName){
 	function *receipt( next){
 		var
-		  reqCtx= this.app[ ctxName],
+		  reqCtx= this[ ctxName],
 		  ctx= reqCtx.ctx
 
 		reqCtx.receipt= reqCtx.receipt|| ctx.receipt[ this.params.receiptId]

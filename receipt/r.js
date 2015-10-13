@@ -15,7 +15,7 @@ var
 function r( ctxName){
 	function *r( next){
 		var
-		  reqCtx= this.app[ ctxName],
+		  reqCtx= this[ ctxName],
 		  ctx= reqCtx.ctx
 
 		reqCtx.r= reqCtx.r|| ctx.r[ this.params.rId]

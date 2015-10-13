@@ -13,7 +13,7 @@ var
 function p( ctxName){
 	function *p( next){
 		var
-		  reqCtx= this.app[ ctxName],
+		  reqCtx= this[ ctxName],
 		  ctx= reqCtx.ctx
 
 		reqCtx.push= reqCtx.push|| ctx.push[ this.params.pId]
@@ -27,7 +27,7 @@ function p( ctxName){
 			}
 			throw new Error( "Param 'push' error")
 		}
-		reqCtx.s = reqCtx.s|| ctx.subscribeToS( subscribe.symbol)
+		reqCtx.s = reqCtx.s|| ctx.subscribeToS( reqCtx.subscribe.symbol)
 		if( !reqCtx.s){
 			if( p.noSOk){
 				return yield next
@@ -45,7 +45,7 @@ function p( ctxName){
 				if( rId!== undefined){
 					reqCtx.r= reqCtx.r[ rId]
 					if( reqCtx.r=== undefined){
-						throw new Error("Param 'r' error")
+						throw new Error("Param 'push-receipt' error")
 					}
 				}
 			}
@@ -69,8 +69,9 @@ function p( ctxName){
 		}
 
 		for( var i= 0;i < reqCtx.s.length; ++i){
-			va
-			  s= reqCtx.s[i]
+			var
+			  sId= reqCtx.s[i],
+			  s= ctx.s[ sId]
 			s.send( reqCtx)
 		}
 

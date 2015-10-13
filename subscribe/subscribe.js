@@ -14,7 +14,7 @@ var
 function subscribe(ctxName){
 	function *subscribe(next){
 		var
-		  reqCtx= this.app[ ctxName],
+		  reqCtx= this[ ctxName],
 		  ctx= reqCtx.ctx,
 		  _created
 

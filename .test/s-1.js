@@ -19,7 +19,9 @@ var spdyAgent= new spdy.createAgent({
   host: "localhost",
   port: 8080,
   ca: server.serverOpts.cert,
-  rejectUnauthorized: false
+  rejectUnauthorized: false,
+  keepAlive: true,
+  keepAliveMsecs: 60*1000
 })
 spdyAgent.on("error", function(err){
 	console.log( "client error", err)
@@ -31,10 +33,10 @@ server.server.on("error", function(err){
 // log pushes
 EventWebPush.on( "push", function( push){
 	push.on( "data", function( data){
-		console.log( "data", data)
+		console.log( "push-data", data)
 	})
 	push.on( "end", function(){
-		console.log( "close")
+		console.log( "push-close")
 		//spdyAgent.close()
 		//server.close()
 	})
@@ -44,6 +46,9 @@ EventWebPush.on( "push", function( push){
 EventWebPush.request({
   host: "localhost",
   path: "/s/magic-subscribe",
+  headers: {
+	"Connection": "keep-alive"
+  },
   agent: spdyAgent
 }, function( res){
 	assert.fail(true, "Request should remain outstanding")
@@ -57,6 +62,9 @@ setTimeout(function(){
 		method: "post",
 		host: "localhost",
 		path: "/p/magic-push",
+		headers: {
+			"Connection": "keep-alive"
+		},
 		agent: spdyAgent
 	}, function( res){
 		res.setEncoding("utf8")

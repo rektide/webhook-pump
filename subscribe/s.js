@@ -18,7 +18,7 @@ var S= require("./S")
 function s( ctxName){
 	function *s( next){
 		var
-		  reqCtx= this.app[ ctxName],
+		  reqCtx= this[ ctxName],
 		  ctx= reqCtx.ctx
 		if( !reqCtx.subscribe){
 			reqCtx.subscribe= reqCtx.ctx.subscribe[ this.params.subscribeId]

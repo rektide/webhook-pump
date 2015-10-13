@@ -9,6 +9,9 @@ function S( reqCtx){
 	if( !self.subscribe){
 		throw new Error("Depends on a subscribe")
 	}
+	if( self.subscribe.symbol){
+		self.subscribe= self.subscribe.symbol
+	}
 	self.socket= self.socket|| reqCtx&& reqCtx.socket
 	if( !self.socket){
 		throw new Error("Depends on a subscribe")

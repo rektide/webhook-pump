@@ -14,15 +14,15 @@ function Context( opts){
 
 	// views
 	self.subscribeToS= projection( self.s, function( s){
-		return s&& s.symbol // to all s for subscribe
-	}, function( s){
-		return s&& s.subscribe // map from subscribe
-	})
-
-	self.receiptToS= projection( self[ "push:receipt"], function( s){
 		return s.symbol // to all s for subscribe
 	}, function( s){
-		return s.s // map from subscribe
+		return s.subscribe // map from subscribe
+	})
+
+	self.receiptToS= projection( self[ "push:receipt"], function( r){
+		return r.symbol // to all s for subscribe
+	}, function( s){
+		return r.s // map from subscribe
 	})
 
 	return self

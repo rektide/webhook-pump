@@ -3,13 +3,11 @@ var
 
 function pre(ctx){
 	function *pre( next){
-		var app= this.app
-		if( !app){
-			app= this.app= {}
-		}
-		var reqCtx= app[ ctx.ctxName]
+		var reqCtx= this[ ctx.ctxName]
 		if( !reqCtx){
-			reqCtx= app[ ctx.ctxName]= {ctx: ctx}
+			reqCtx= this[ ctx.ctxName]= {ctx: ctx}
+		}else if( !reqCtx.ctx){
+			reqCtx.ctx= ctx
 		}
 		this.timestamp= reqCtx.timestamp= (new Date()).getTime()
 		yield next

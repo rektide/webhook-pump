@@ -7,6 +7,9 @@ function R( reqCtx){
 	var self= classiness( this, R, [ reqCtx])
 
 	self.receipt= self.receipt|| reqCtx.receipt
+	if( self.receipt.symbol){
+		self.receipt= self.receipt.symbol
+	}
 	self.socket= self.socket|| reqCtx.socket
 	if( !self.socket){
 		throw new Error("Depends on a subscribe")

@@ -7,7 +7,7 @@
 */
 function d( ctxName){
 	function *d( next){
-		var reqCtx= this.app[ ctxName],
+		var reqCtx= this[ ctxName],
 		  ctx= reqCtx.ctx
 		reqCtx.d= reqCtx.d|| ctx.d[ this.params.dId]
 		if( !reqCtx.d){

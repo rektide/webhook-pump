@@ -7,7 +7,10 @@ function D( reqCtx){
 	var self= classiness( this, D, [ reqCtx])
 	self= classiness( self, D, reqCtx)
 	self.r= self.r|| reqCtx.r
-	
+	if( self.r&& self.r.symbol){
+		self.r= self.r.symbol
+	}
+
 	self.acked= {}
 	self.n= 0
 	return self

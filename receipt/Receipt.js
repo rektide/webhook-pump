@@ -5,7 +5,10 @@ var
 
 function Receipt( reqCtx){
 	var self= classiness( this, Receipt, [ reqCtx])
-	self.push= self.push|| reqCtx.push.symbol
+	self.push= self.push|| reqCtx.push
+	if( self.push.symbol){
+		self.push= self.push.symbol
+	}
 	if( !self.push){
 		// normally receipts only delivered for a specific push, but can alternatively bind wider, to a subscribe
 		self.subscribe= self.subscribe|| reqCtx.subscribe.symbol

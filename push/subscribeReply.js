@@ -5,7 +5,7 @@ var
 
 function subscribeReply( ctxName){
 	function *subscribeReply( next){
-		var reqCtx= this.ctx[ ctxName]
+		var reqCtx= this[ ctxName]
 		linkP[1]= reqCtx.ctx.path("p")
 		linkP[2]= reqCtx.push.id
 		this.set( "Link", linkP.join(""))
