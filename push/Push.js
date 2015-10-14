@@ -54,17 +54,24 @@ Push.prototype.pushView= require("./pushView")
 
 Push.prototype.send= function send( source, headers, ctx){
 	var
-	  d= this._d( ctx),
-	  dId= ctx.d[ d].id,
+	  dId= this._d( ctx),
 	  s= this._s( ctx),
-	  deleteBase= ctx.path("d"),
+	  deleteBase= ctx.path( "d"),
 	  pushCtx= this.pushView( headers, dId, deleteBase)
 
-	for( var i= 0;i < s.length; ++i){
-		var
-		  sId= s[i],
-		  s= ctx.s[ sId]
-		s.send( source, pushCtx)
+	if( s){
+		for( var i= 0;i < s.length; ++i){
+			var
+			  sId= s[i],
+			  s= ctx.s[ sId]
+			s.send( source, pushCtx)
+		}
+	}else{
+		if( !this.okEmpty&& !module.exports.okEmpty){
+			throw new Error( "Param 'push' error")
+		}else if( this.warn|| module.exports.warn){
+			console.warn("no one to send push to")
+		}
 	}
 	return pushCtx
 }
@@ -103,7 +110,6 @@ Push.prototype._d= function( ctx){
 		this.d= d.symbol
 		return d.id
 	}
-	throw new Error("Param 'd' error")
 }
 
 Push.prototype._s= function( ctx){
@@ -113,11 +119,7 @@ Push.prototype._s= function( ctx){
 	if( !this.subscribe){
 		throw new Error( "Param 'p' error")
 	}
-	var s= ctx.subscribeToS( this.subscribe)
-	if( !s){
-		throw new Error( "Param 'p' error")
-	}
-	return s
+	return ctx.subscribeToS( this.subscribe)
 }
 
 Push.prototype[ "@type"]= Push.name.toLowerCase()

@@ -28,7 +28,11 @@ function S( reqCtx){
 			throw new Error( "Param 'pushView' error")
 		}
 		var stream= push.call(self.socket, pushCtx.resourcePath|| pushCtx.deletePath, pushCtx.headers)
-		source.pipe(stream)
+		if( source.pipe){
+			source.pipe(stream)
+		}else{
+			stream.end(source)
+		}
 		return new Promise( function( resolve, reject){
 			stream.on("end", function(){
 				resolve()

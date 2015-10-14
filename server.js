@@ -1,8 +1,22 @@
+function context(o){
+	o= o|| {}
+	o.ctx= o.ctx|| new (require( "./Context"))(o)
+	return o.ctx
+}
+
+function routes(o){
+	o= o|| {}
+	o.ctx= o.ctx|| context(o)
+	o.routes= o.routes|| o.ctx.routes()
+	return o.routes
+}
+
 function koa(o){
 	o= o|| {}
 	o.ctx= o.ctx|| new (require( "./Context"))(o)
 	o.koa= o.koa|| require( "koa")()
-	o.koa.use( o.ctx.routes())
+	o.routes= o.routes|| routes(o)
+	o.koa.use( o.routes)
 	return o.koa
 }
 
@@ -39,6 +53,8 @@ if( require.main=== module){
 }
 
 module.exports= server
-module.exports.sign= sign
+module.exports.context= context
+module.exports.routes= routes
 module.exports.koa= koa
+module.exports.sign= sign
 module.exports.server= server

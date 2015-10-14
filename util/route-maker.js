@@ -20,6 +20,7 @@ function routeMaker(){
 			}
 			router[ method]( path, pre(ctx), handler)
 		}
+		return router
 	}
 	return routes
 }
