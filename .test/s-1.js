@@ -4,14 +4,14 @@ var
   spdy= require("spdy"),
   EventWebPush= require( "event-webpush"),
   Subscribe= require("../subscribe/Subscribe"),
-  Push= require("../push/Push")
+  P= require("../push/P")
 
 // preload a crafted Subscribe and Push
 var subscribe= new Subscribe()
 subscribe.id= "magic-subscribe"
 server.ctx.accept(subscribe)
 
-var push= new Push({ id: "magic-push", subscribe: subscribe.id})
+var push= new P({ id: "magic-push", subscribe: subscribe.id})
 server.ctx.accept(push)
 
 // create a client, finish server
@@ -79,4 +79,4 @@ setTimeout(function(){
 	}).on( "error", function( err){
 		console.log( "get2 error", err)
 	}).end( "console.log(2+2+\"2\");")
-}, 120*1000)
+}, 1000)

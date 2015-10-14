@@ -7,7 +7,7 @@ function subscribeReply( ctxName){
 	function *subscribeReply( next){
 		var reqCtx= this[ ctxName]
 		linkP[1]= reqCtx.ctx.path("p")
-		linkP[2]= reqCtx.push.id
+		linkP[2]= reqCtx.p.id
 		this.set( "Link", linkP.join(""))
 	}
 	Object.defineProperty(subscribeReply, "ctxName", {

@@ -7,7 +7,7 @@ var
 function Context( opts){
 	var self= insureClassiness( this, Context, opts)
 	self.subscribe= {}
-	self.push= {}
+	self.p= {}
 	self[ "push:receipt"]= {}
 	self.s= {}
 	self.d= {}
@@ -29,7 +29,7 @@ function Context( opts){
 }
 
 Context.prototype.subscribe= null
-Context.prototype.push= null
+Context.prototype.p= null
 Context.prototype[ "push:receipt"]= null
 Context.prototype.s= null
 Context.prototype.d= null

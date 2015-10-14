@@ -1,25 +1,36 @@
 var copyHeaders= ["content-type", "content-length"]
 
-function pushView( reqCtx, request){
+function pushView( reqHeaders, dId, deleteBase, o){
+	o= o|| {}
 	var
+	  resourcePath= reqHeaders["Location"],
 	  date= (new Date()).toUTCString(),
-	  reqHeaders= {
+	  pushHeaders= {
 		"cache-control": "private",
 		"date": date,
 		"last-modified": date
-	  },
-	  pushHeaders= { "request": reqHeaders }
+	  }
 	for( var i= 0; i< copyHeaders.length; ++i){
 		var
-		  header= copyHeaders[i],
-		  val= request.header[ header]
+		  header= copyHeaders[ i],
+		  val= reqHeaders[ header]
 		if( val!== undefined){
-			reqHeaders[ header]= val
+			pushHeaders[ header]= val
 		}
 	}
-	reqCtx.pushHeaders= pushHeaders
-	reqCtx.pushCode= 200 // not exposed in node-spdy yet
-	reqCtx.pushPath= reqCtx.ctx.path("d")+ reqCtx.d.id
+	if( !o.deletePath&& dId){
+		o.deletePath= o.deletePath|| (deleteBase+ dId)
+	}
+	if( resourcePath){
+		o.resourcePath= resourcePath
+	}else if( o.deletePath){
+		o.resourcePath= o.deletePath
+	}else{
+		throw new Error("Push path error")
+	}
+	o.headers= { request: pushHeaders }
+	o.statusCode= 200 // not exposed in node-spdy yet
+	return o
 }
 
 module.exports= pushView

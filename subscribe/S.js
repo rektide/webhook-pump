@@ -19,16 +19,16 @@ function S( reqCtx){
 	if( !self.socket.symbol){
 		self.socket.symbol= Symbol()
 	}
-	self.send= self.send|| reqCtx&& reqCtx.send|| function( pushCtx, req){
-		if( pushCtx.pushHeaders=== undefined){
+	self.send= self.send|| reqCtx&& reqCtx.send|| function( source, pushCtx){
+		if( pushCtx.headers=== undefined){
 			throw new Error( "Param 'pushView' error")
 		}
 		var push= self.push|| S.push
 		if( push=== undefined){
 			throw new Error( "Param 'pushView' error")
 		}
-		var stream= push.call(self.socket, pushCtx.pushPath, pushCtx.pushHeaders)
-		req.pipe(stream)
+		var stream= push.call(self.socket, pushCtx.resourcePath|| pushCtx.deletePath, pushCtx.headers)
+		source.pipe(stream)
 		return new Promise( function( resolve, reject){
 			stream.on("end", function(){
 				resolve()

@@ -18,13 +18,13 @@ function receipt( ctxName){
 		if( !reqCtx.receipt){
 			throw new Error("Params 'receipt' error")
 		}
-		if( reqCtx.receipt.push){
-			reqCtx.push= ctx.push[ reqCtx.receipt.push]
+		if( reqCtx.receipt.p){
+			reqCtx.p= ctx.p[ reqCtx.receipt.p]
 		}
-		if( !reqCtx.push&& reqCtx.receipt.subscribe){
+		if( !reqCtx.p&& reqCtx.receipt.subscribe){
 			reqCtx.subscribe= ctx.subscribe[ reqCtx.receipt.subscribe]
 		}
-		if( !(reqCtx.push|| reqCtx.subscribe)){
+		if( !(reqCtx.p|| reqCtx.subscribe)){
 			throw new Error("Param 'receipt' error")
 		}
 

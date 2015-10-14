@@ -1,6 +1,6 @@
 var
   Subscribe= require("./Subscribe"),
-  Push= require("../push/Push"),
+  P= require("../push/P"),
   Receipt= require("../receipt/Receipt")
 
 /**
@@ -22,8 +22,8 @@ function subscribe(ctxName){
 			reqCtx.subscribe= _created= new Subscribe( reqCtx)
 			ctx.accept( _created)
 		}
-		if( !reqReqCtx.push){
-			reqCtx.push= _created= new Push( reqCtx)
+		if( !reqReqCtx.p){
+			reqCtx.push= _created= new P( reqCtx)
 			ctx.accept( _created)
 		}
 		if( !reqCtx.receipt){

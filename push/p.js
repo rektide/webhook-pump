@@ -1,6 +1,7 @@
 var
   D= require("../subscribe/D"),
-  R= require("../receipt/R")
+  R= require("../receipt/R"),
+  Push= require("./Push")
 
 /**
   5. Requesting Push Message Delivery
@@ -16,27 +17,12 @@ function p( ctxName){
 		  reqCtx= this[ ctxName],
 		  ctx= reqCtx.ctx
 
-		reqCtx.push= reqCtx.push|| ctx.push[ this.params.pId]
-		if( !reqCtx.push){
-			throw new Error( "Param 'push' error")
-		}
-		reqCtx.subscribe= reqCtx.subscribe|| ctx.subscribe[ reqCtx.push.subscribe]
-		if( !reqCtx.subscribe){
-			if( p.noSubscribeOk){
-				return yield next
-			}
-			throw new Error( "Param 'push' error")
-		}
-		reqCtx.s = reqCtx.s|| ctx.subscribeToS( reqCtx.subscribe.symbol)
-		if( !reqCtx.s){
-			if( p.noSOk){
-				return yield next
-			}
-			throw new Error( "Param 'push' error")
-		}
+		reqCtx.p= reqCtx.p|| ctx.p[ this.params.pId]
+		reqCtx.subscribe= reqCtx.subscribe|| ctx.subscribe[ reqCtx.p.subscribe]
 
-		// extract r, validate, make d
+		// extract r, validate if no d yet
 		if( !reqCtx.d){
+			// find the push-receipt (r)
 			if( reqCtx.r=== undefined){
 				var rId= this.params.rId
 				if( rId=== undefined){
@@ -58,27 +44,18 @@ function p( ctxName){
 				}
 			}
 			reqCtx.d= new D(reqCtx)
+			reqCtx.ctx.accept( reqCtx.d)
 		}
 
-		if( !reqCtx.pushView){
-			if( !reqCtx.request){
-				reqCtx.request= this.request
-			}
-			(reqCtx.pushView|| reqCtx.ctx.pushView)( reqCtx, this.request)
-		}
-
-		for( var i= 0;i < reqCtx.s.length; ++i){
-			var
-			  sId= reqCtx.s[i],
-			  s= ctx.s[ sId]
-			s.send( reqCtx, this.req) // node not koa!
-		}
+		var
+		  push= reqCtx.push= new Push( reqCtx),
+		  view= push.send( this.req, this.request.headers, reqCtx.ctx)
 
 		this.body= ""
 		this.type= ""
 		this.status= 201
-		if( reqCtx.pushPath){
-			this.set( "Location", reqCtx.pushPath)
+		if( view.deletePath){
+			this.set( "Location", view.deletePath)
 		}
 
 		yield next

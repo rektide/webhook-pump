@@ -9,4 +9,5 @@ module.exports.p= p
 module.exports.subscribeReply= subscribeReply
 
 module.exports.Push= require( "./Push")
+module.exports.P= require( "./P")
 module.exports.pushView= require( "./pushView")
