@@ -64,20 +64,21 @@ function p( ctxName){
 			if( !reqCtx.request){
 				reqCtx.request= this.request
 			}
-			(reqCtx.pushView|| reqCtx.ctx.pushView)( reqCtx)
-			yield next // BREAK
+			(reqCtx.pushView|| reqCtx.ctx.pushView)( reqCtx, this.request)
 		}
 
 		for( var i= 0;i < reqCtx.s.length; ++i){
 			var
 			  sId= reqCtx.s[i],
 			  s= ctx.s[ sId]
-			s.send( reqCtx)
+			s.send( reqCtx, this.req) // node not koa!
 		}
 
+		this.body= ""
+		this.type= ""
 		this.status= 201
-		if( reqCtx.d.id){
-			this.set( "Location", ctx.path("d")+ reqCtx.d.id)
+		if( reqCtx.pushPath){
+			this.set( "Location", reqCtx.pushPath)
 		}
 
 		yield next

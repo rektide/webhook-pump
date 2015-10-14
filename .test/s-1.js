@@ -21,7 +21,7 @@ var spdyAgent= new spdy.createAgent({
   ca: server.serverOpts.cert,
   rejectUnauthorized: false,
   keepAlive: true,
-  keepAliveMsecs: 60*1000
+  keepAliveMsecs: 30*60*1000
 })
 spdyAgent.on("error", function(err){
 	console.log( "client error", err)
@@ -32,11 +32,12 @@ server.server.on("error", function(err){
 
 // log pushes
 EventWebPush.on( "push", function( push){
+	push.setEncoding("utf8")
 	push.on( "data", function( data){
 		console.log( "push-data", data)
 	})
 	push.on( "end", function(){
-		console.log( "push-close")
+		//console.log( "push-close")
 		//spdyAgent.close()
 		//server.close()
 	})
@@ -67,14 +68,15 @@ setTimeout(function(){
 		},
 		agent: spdyAgent
 	}, function( res){
+		assert.equal(res.statusCode, 201)
 		res.setEncoding("utf8")
 		res.on( "data", function( data){
-			console.log( "data2", JSON.stringify(res.headers), data)
+			//console.log( "data2", JSON.stringify(res.headers), data)
 		})
 		res.on( "end", function(){
-			console.log( "end2")
+			//console.log( "end2")
 		})
 	}).on( "error", function( err){
 		console.log( "get2 error", err)
 	}).end( "console.log(2+2+\"2\");")
-}, 2000)
+}, 120*1000)

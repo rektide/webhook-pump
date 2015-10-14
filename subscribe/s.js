@@ -28,7 +28,7 @@ function s( ctxName){
 		}
 		if( !reqCtx.s){
 			if( !reqCtx.socket){
-				reqCtx.socket= this.response.socket
+				reqCtx.socket= this.res
 			}
 			reqCtx.s= new S( reqCtx)
 		}
@@ -37,6 +37,8 @@ function s( ctxName){
 
 		// "The push service permits the request to remain outstanding."
 		this.respond= false
+		this.body= ""
+		this.req.setTimeout(0)
 		yield next
 	}
 	Object.defineProperty( s, "ctxName", {
